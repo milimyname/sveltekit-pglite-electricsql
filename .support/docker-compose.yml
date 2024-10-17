@@ -31,8 +31,8 @@ services:
       - 3000:3000
     depends_on:
       - postgres
-    networks:
-      - ipv6_network
+    # networks:
+    #   - ipv6_network
 # networks:
 #   ipv6_network:
 #     enable_ipv6: true
