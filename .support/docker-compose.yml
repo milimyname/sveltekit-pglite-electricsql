@@ -1,0 +1,42 @@
+version: '3.3'
+name: 'electric_example-${PROJECT_NAME:-default}'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: electric
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - 54321:5432
+    volumes:
+      - ./postgres.conf:/etc/postgresql/postgresql.conf:ro
+    tmpfs:
+      - /var/lib/postgresql/data
+      - /tmp
+    command:
+      - postgres
+      - -c
+      - config_file=/etc/postgresql/postgresql.conf
+
+  backend:
+    image: electricsql/electric:canary
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/electric
+      DATABASE_USE_IPV6: true
+      LISTEN_ON_IPV6: true
+
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    networks:
+      - ipv6_network
+# networks:
+#   ipv6_network:
+#     enable_ipv6: true
+#     ipam:
+#       config:
+#         - subnet: fd00:c16a:601e::/80
+#           gateway: fd00:c16a:601e::1
