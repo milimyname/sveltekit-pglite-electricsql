@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@electric-sql/client':
+        specifier: ^0.6.3
+        version: 0.6.3
       '@electric-sql/pglite':
         specifier: ^0.2.12
         version: 0.2.12
@@ -17,6 +20,9 @@ importers:
       '@tanstack/svelte-query':
         specifier: ^5.59.13
         version: 5.59.13(svelte@5.0.0-next.269)
+      '@tanstack/svelte-query-devtools':
+        specifier: ^5.59.13
+        version: 5.59.13(@tanstack/svelte-query@5.59.13(svelte@5.0.0-next.269))(svelte@5.0.0-next.269)
       drizzle-orm:
         specifier: ^0.35.1
         version: 0.35.1(@electric-sql/pglite@0.2.12)(@types/pg@8.11.10)(pg@8.13.0)(postgres@3.4.4)
@@ -26,7 +32,13 @@ importers:
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
+      '@faker-js/faker':
+        specifier: ^9.0.3
+        version: 9.0.3
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
         version: 3.2.5(@sveltejs/kit@2.7.1(@sveltejs/vite-plugin-svelte@4.0.0-next.8(svelte@5.0.0-next.269)(vite@5.4.9(@types/node@22.7.6)))(svelte@5.0.0-next.269)(vite@5.4.9(@types/node@22.7.6)))
@@ -555,6 +567,10 @@ packages:
     resolution: {integrity: sha512-vH9PiIMMwvhCx31Af3HiGzsVNULDbyVkHXwlemn/B0TFj/00ho3y55efXrUZTfQipxoHC5u4xq6zblww1zm1Ig==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@faker-js/faker@9.0.3':
+    resolution: {integrity: sha512-lWrrK4QNlFSU+13PL9jMbMKLJYXDFu3tQfayBsMXX7KL/GiQeqfB1CzHkqD5UHBUtPAuPo6XwGbMFNdVMZObRA==}
+    engines: {node: '>=18.0.0', npm: '>=9.0.0'}
+
   '@humanfs/core@0.19.0':
     resolution: {integrity: sha512-2cbWIHbZVEweE853g8jymffCA+NCMiuqeECeBBLm8dg2oFdjuGJhgN4UAbI+6v0CKbbhvtXA4qV8YR5Ji86nmw==}
     engines: {node: '>=18.18.0'}
@@ -715,6 +731,15 @@ packages:
 
   '@tanstack/query-core@5.59.13':
     resolution: {integrity: sha512-Oou0bBu/P8+oYjXsJQ11j+gcpLAMpqW42UlokQYEz4dE7+hOtVO9rVuolJKgEccqzvyFzqX4/zZWY+R/v1wVsQ==}
+
+  '@tanstack/query-devtools@5.58.0':
+    resolution: {integrity: sha512-iFdQEFXaYYxqgrv63ots+65FGI+tNp5ZS5PdMU1DWisxk3fez5HG3FyVlbUva+RdYS5hSLbxZ9aw3yEs97GNTw==}
+
+  '@tanstack/svelte-query-devtools@5.59.13':
+    resolution: {integrity: sha512-LuJsxU0wC60+OAbLdHvugvaUAmVOx+g+081/uipnoVdCHWAQWz1usdsfxAehSjH8iIvPZ7js818jnFS6QX2nFQ==}
+    peerDependencies:
+      '@tanstack/svelte-query': ^5.59.13
+      svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
 
   '@tanstack/svelte-query@5.59.13':
     resolution: {integrity: sha512-ulyvUFl6nTfpC4z0ljk1venGOGnDGCd3EZhkeFV+EkjI/skJeXbk/Z1TqDL6oZ5QvtT+F9DjObsZihP5ht39Ng==}
@@ -1677,6 +1702,9 @@ packages:
   zimmerframe@1.1.2:
     resolution: {integrity: sha512-rAbqEGa8ovJy4pyBxZM70hg4pE6gDgaQ0Sl9M3enG3I0d6H4XSAM3GeNGLKnsBpuijUow064sf7ww1nutC5/3w==}
 
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+
 snapshots:
 
   '@ampproject/remapping@2.3.0':
@@ -1950,6 +1978,8 @@ snapshots:
     dependencies:
       levn: 0.4.1
 
+  '@faker-js/faker@9.0.3': {}
+
   '@humanfs/core@0.19.0': {}
 
   '@humanfs/node@0.16.5':
@@ -2086,6 +2116,15 @@ snapshots:
       - supports-color
 
   '@tanstack/query-core@5.59.13': {}
+
+  '@tanstack/query-devtools@5.58.0': {}
+
+  '@tanstack/svelte-query-devtools@5.59.13(@tanstack/svelte-query@5.59.13(svelte@5.0.0-next.269))(svelte@5.0.0-next.269)':
+    dependencies:
+      '@tanstack/query-devtools': 5.58.0
+      '@tanstack/svelte-query': 5.59.13(svelte@5.0.0-next.269)
+      esm-env: 1.0.0
+      svelte: 5.0.0-next.269
 
   '@tanstack/svelte-query@5.59.13(svelte@5.0.0-next.269)':
     dependencies:
@@ -3005,3 +3044,5 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   zimmerframe@1.1.2: {}
+
+  zod@3.23.8: {}
