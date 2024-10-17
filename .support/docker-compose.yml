@@ -23,9 +23,9 @@ services:
   backend:
     image: electricsql/electric:canary
     environment:
-      DATABASE_URL: postgresql://postgres:password@postgres:5432/electric
-      DATABASE_USE_IPV6: true
-      LISTEN_ON_IPV6: true
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/electric?sslmode=disable
+      # DATABASE_USE_IPV6: true
+      # LISTEN_ON_IPV6: true
 
     ports:
       - 3000:3000

@@ -1,5 +1,5 @@
 {
-  "id": "ee76e594-c61a-44e3-9d71-472ef8db4ade",
+  "id": "7b447e24-958c-4df8-bd56-c50930540280",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -14,6 +14,20 @@
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "item_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'active'"
         }
       },
       "indexes": {},
@@ -23,7 +37,16 @@
       "checkConstraints": {}
     }
   },
-  "enums": {},
+  "enums": {
+    "public.item_status": {
+      "name": "item_status",
+      "schema": "public",
+      "values": [
+        "active",
+        "inactive"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "views": {},
