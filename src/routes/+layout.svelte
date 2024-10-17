@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '../app.css';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 
