@@ -3,12 +3,13 @@
 	import { createMutation } from '@tanstack/svelte-query';
 	import { v4 as uuidv4 } from 'uuid';
 	import { faker } from '@faker-js/faker';
+	import { onMount } from 'svelte';
 
 	const { data } = $props();
 
 	let items = $state<Item[]>([]);
 
-	$effect(async () => {
+	onMount(async () => {
 		if (!data.pglite) return;
 
 		const shape = await data.pglite.electric.syncShapeToTable({

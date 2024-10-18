@@ -16,7 +16,7 @@ export async function load() {
 
 	const pglite = browser
 		? await PGlite.create({
-				debug: 1,
+				// debug: 1,
 				fs: new IdbFs('my-database'),
 				extensions: {
 					live,

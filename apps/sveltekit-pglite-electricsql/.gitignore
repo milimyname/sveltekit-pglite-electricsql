@@ -19,10 +19,3 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-
-
-.DS_store
-.vscode
-**/dist/**
-build
-node_modules
