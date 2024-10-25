@@ -13,8 +13,8 @@
 		"backend:up": "PROJECT_NAME=sveltekit-tanstack-electric pnpm run example-backend:up && pnpm run migrate",
 		"backend:down": "PROJECT_NAME=sveltekit-tanstack-electric pnpm run example-backend:down",
 		"backend:clear": "pnpm run  backend:down && pnpm run  backend:up",
-		"example-backend:up": "dotenv -e .env.dev -- docker compose -f ./.support/docker-compose.yml up -d",
-		"example-backend:down": "dotenv  -e .env.dev -- docker compose -f .support/docker-compose.yml down --volumes",
+		"example-backend:up": "dotenv -e .env.dev -- docker compose -f ../../.support/docker-compose.yml up -d",
+		"example-backend:down": "dotenv  -e .env.dev -- docker compose -f ../../.support/docker-compose.yml down --volumes",
 		"generate": "drizzle-kit generate",
 		"migrate": "drizzle-kit migrate",
 		"studio": "pnpx drizzle-kit studio"
@@ -55,6 +55,7 @@
 		"drizzle-orm": "^0.35.1",
 		"postgres": "^3.4.4",
 		"uuid": "^10.0.0",
-		"zod": "^3.23.8"
+		"zod": "^3.23.8",
+		"@repo/ui": "workspace:*"
 	}
 }
