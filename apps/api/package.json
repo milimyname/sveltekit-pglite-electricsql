@@ -1,0 +1,33 @@
+{
+  "name": "taijobi-api",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx --watch src/index.ts",
+    "backend:up": "PROJECT_NAME=sveltekit-tanstack-electric pnpm example-backend:up && pnpm migrate",
+    "backend:down": "PROJECT_NAME=sveltekit-tanstack-electric pnpm example-backend:down",
+    "backend:clear": "pnpm backend:down && pnpm backend:up",
+    "example-backend:up": "dotenv -e .env.dev -- docker compose -f ../../.support/docker-compose.yml up -d",
+    "example-backend:down": "dotenv -e .env.dev -- docker compose -f ../../.support/docker-compose.yml down --volumes",
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate",
+    "studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.2",
+    "@hono/zod-openapi": "^0.16.4",
+    "@scalar/hono-api-reference": "^0.5.156",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.35.3",
+    "hono": "^4.6.7",
+    "pg": "^8.13.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@hono/eslint-config": "^1.0.2",
+    "@types/node": "^20.11.17",
+    "@types/pg": "^8.11.10",
+    "dotenv-cli": "^7.4.2",
+    "drizzle-kit": "^0.26.2",
+    "tsx": "^4.19.1"
+  }
+}
