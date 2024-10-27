@@ -26,6 +26,9 @@ importers:
       '@hono/zod-openapi':
         specifier: ^0.16.4
         version: 0.16.4(hono@4.6.7)(zod@3.23.8)
+      '@hono/zod-validator':
+        specifier: ^0.4.1
+        version: 0.4.1(hono@4.6.7)(zod@3.23.8)
       '@scalar/hono-api-reference':
         specifier: ^0.5.156
         version: 0.5.156(hono@4.6.7)
@@ -35,6 +38,9 @@ importers:
       drizzle-orm:
         specifier: ^0.35.3
         version: 0.35.3(@electric-sql/pglite@0.2.12)(@libsql/client-wasm@0.14.0)(@types/pg@8.11.10)(pg@8.13.1)(postgres@3.4.5)
+      drizzle-zod:
+        specifier: ^0.5.1
+        version: 0.5.1(drizzle-orm@0.35.3(@electric-sql/pglite@0.2.12)(@libsql/client-wasm@0.14.0)(@types/pg@8.11.10)(pg@8.13.1)(postgres@3.4.5))(zod@3.23.8)
       hono:
         specifier: ^4.6.7
         version: 4.6.7
@@ -185,12 +191,6 @@ importers:
       bits-ui:
         specifier: 1.0.0-next.20
         version: 1.0.0-next.20(svelte@5.1.3)
-      drizzle-orm:
-        specifier: ^0.35.1
-        version: 0.35.3(@electric-sql/pglite@0.2.12)(@libsql/client-wasm@0.14.0)(@types/pg@8.11.10)(pg@8.13.1)(postgres@3.4.5)
-      postgres:
-        specifier: ^3.4.4
-        version: 3.4.5
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
@@ -225,9 +225,6 @@ importers:
       dotenv-cli:
         specifier: ^7.4.2
         version: 7.4.2
-      drizzle-kit:
-        specifier: ^0.26.2
-        version: 0.26.2
       eslint:
         specifier: ^9.0.0
         version: 9.13.0(jiti@1.21.6)
@@ -824,6 +821,12 @@ packages:
 
   '@hono/zod-validator@0.3.0':
     resolution: {integrity: sha512-7XcTk3yYyk6ldrO/VuqsroE7stvDZxHJQcpATRAyha8rUxJNBPV3+6waDrARfgEqxOVlzIadm3/6sE/dPseXgQ==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      zod: ^3.19.1
+
+  '@hono/zod-validator@0.4.1':
+    resolution: {integrity: sha512-I8LyfeJfvVmC5hPjZ2Iij7RjexlgSBT7QJudZ4JvNPLxn0JQ3sqclz2zydlwISAnw21D2n4LQ0nfZdoiv9fQQA==}
     peerDependencies:
       hono: '>=3.9.0'
       zod: ^3.19.1
@@ -1602,6 +1605,12 @@ packages:
         optional: true
       sqlite3:
         optional: true
+
+  drizzle-zod@0.5.1:
+    resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
+    peerDependencies:
+      drizzle-orm: '>=0.23.13'
+      zod: '*'
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
@@ -3398,6 +3407,11 @@ snapshots:
       hono: 4.6.7
       zod: 3.23.8
 
+  '@hono/zod-validator@0.4.1(hono@4.6.7)(zod@3.23.8)':
+    dependencies:
+      hono: 4.6.7
+      zod: 3.23.8
+
   '@humanfs/core@0.19.0': {}
 
   '@humanfs/node@0.16.5':
@@ -4202,6 +4216,11 @@ snapshots:
       '@types/pg': 8.11.10
       pg: 8.13.1
       postgres: 3.4.5
+
+  drizzle-zod@0.5.1(drizzle-orm@0.35.3(@electric-sql/pglite@0.2.12)(@libsql/client-wasm@0.14.0)(@types/pg@8.11.10)(pg@8.13.1)(postgres@3.4.5))(zod@3.23.8):
+    dependencies:
+      drizzle-orm: 0.35.3(@electric-sql/pglite@0.2.12)(@libsql/client-wasm@0.14.0)(@types/pg@8.11.10)(pg@8.13.1)(postgres@3.4.5)
+      zod: 3.23.8
 
   eastasianwidth@0.2.0: {}
 
@@ -5165,7 +5184,8 @@ snapshots:
 
   postgres-range@1.1.4: {}
 
-  postgres@3.4.5: {}
+  postgres@3.4.5:
+    optional: true
 
   prelude-ls@1.2.1: {}
 

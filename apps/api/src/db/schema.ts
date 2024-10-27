@@ -1,4 +1,5 @@
 import { pgTable, uuid, text, pgEnum } from 'drizzle-orm/pg-core'
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 // Enums
 export const itemStatus = pgEnum('item_status', ['active', 'inactive'])
@@ -9,3 +10,7 @@ export const itemsTable = pgTable('items', {
   name: text(),
   status: itemStatus('status').default('active'),
 })
+
+// Schemas
+export const insertItemSchema = createInsertSchema(itemsTable)
+export const selectItemSchema = createSelectSchema(itemsTable)
