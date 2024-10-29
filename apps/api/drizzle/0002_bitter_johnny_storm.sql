@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS "unique_example_idx" ON "examples" USING btree ("japanese","english");

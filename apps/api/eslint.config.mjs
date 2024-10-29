@@ -1,3 +1,3 @@
-import baseConfig from '@hono/eslint-config';
+import baseConfig from '@hono/eslint-config'
 
-export default [...baseConfig];
+export default [...baseConfig]

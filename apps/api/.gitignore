@@ -27,3 +27,8 @@ lerna-debug.log*
 
 # misc
 .DS_Store
+
+temp
+
+# Any sql file which contains dump in its name
+*dump.sql
