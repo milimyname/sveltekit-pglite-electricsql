@@ -11,7 +11,9 @@
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
     "studio": "drizzle-kit studio",
-    "download-jmdict": "tsx src/scripts/download-jmdict.ts"
+    "download-jmdict": "tsx src/scripts/download-jmdict.ts",
+    "download-kanjidic": "tsx src/scripts/download-kanjidic.ts",
+    "download-kanjivg": "tsx src/scripts/download-kanjivg.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.2",

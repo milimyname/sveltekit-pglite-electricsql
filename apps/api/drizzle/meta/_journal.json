@@ -15,6 +15,34 @@
       "when": 1730068155134,
       "tag": "0001_late_reavers",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1730160210683,
+      "tag": "0002_bitter_johnny_storm",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1730161769735,
+      "tag": "0003_pink_mattie_franklin",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1730162026426,
+      "tag": "0004_great_iron_monger",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1730163526291,
+      "tag": "0005_wakeful_roulette",
+      "breakpoints": true
     }
   ]
 }
