@@ -7,13 +7,18 @@ import { exit } from 'node:process'
 import { pipeline } from 'stream/promises'
 import { createGunzip } from 'zlib'
 import { db } from '../db/index.js'
-import { dictionaryEntries, meanings, examples } from '../db/schema.ts'
+import { dictionaryEntries, meanings } from '../db/schema.ts'
 import type { JMDictEntry, WordFrequency } from '../types/jmdict.d.ts'
 
 const JMDICT_URL = 'http://ftp.edrdg.org/pub/Nihongo/JMdict_e.gz'
 const TEMP_DIR = './temp'
 const DOWNLOAD_PATH = `${TEMP_DIR}/JMdict_e.gz`
 const XML_PATH = `${TEMP_DIR}/JMdict_e.xml`
+
+// Add performance monitoring
+let startTime = Date.now()
+let lastLogged = startTime
+const PROGRESS_INTERVAL = 10000 // Log every 10 seconds
 
 async function downloadDictionary() {
   // Create temp directory
@@ -66,61 +71,24 @@ async function processDictionary() {
 
   // Process in batches to avoid memory issues
   const BATCH_SIZE = 5000
+  const totalEntries = entries.length
+  let processedEntries = 0
+
+  console.log(`Starting to process ${totalEntries} entries...`)
+  startTime = Date.now() // Reset start time before processing begins
+
   for (let i = 0; i < entries.length; i += BATCH_SIZE) {
     const batch = entries.slice(i, i + BATCH_SIZE)
     await processBatch(batch)
-    console.log(`Processed ${i + batch.length} of ${entries.length} entries`)
+
+    processedEntries += batch.length
+    logProgress(processedEntries, totalEntries)
   }
+
+  // Final progress update
+  console.log('\nProcessing completed:')
+  logProgress(totalEntries, totalEntries)
 }
-
-// async function processBatch(entries: JMDictEntry[]) {
-//   for (const entry of entries) {
-//     const kanji = entry.k_ele?.map((k) => k.keb[0]) || []
-//     const reading = entry.r_ele.map((r) => r.reb[0])
-//     const pos = entry.sense.flatMap((s) => s.pos || [])
-
-//     // Get frequency information directly from tags
-//     const { frequency, isCommon } = getWordFrequencyInfo(entry)
-
-//     // Insert main entry
-//     const entries = await db
-//       .insert(dictionaryEntries)
-//       .values({
-//         kanji: kanji.join('|'),
-//         reading: reading.join('|'),
-//         pos,
-//         jlptLevel: mapToJLPT(frequency),
-//         isCommon,
-//       })
-//       .returning()
-//       .onConflictDoNothing()
-
-//     // Insert meanings
-//     const entryMeanings = entry.sense.flatMap((s) => s.gloss)
-//     await db
-//       .insert(meanings)
-//       .values(
-//         entryMeanings.map((meaning, priority) => ({
-//           entryId: entries[0].id,
-//           meaning,
-//           priority,
-//         }))
-//       )
-//       .onConflictDoNothing()
-
-//     // Insert examples
-//     // const entryExamples = entry.sense.flatMap((s) => s.example)
-//     // await db
-//     //   .insert(examples)
-//     //   .values(
-//     //     entryExamples.map((example) => ({
-//     //       entryId: entries[0].id,
-//     //       example,
-//     //     }))
-//     //   )
-//     //   .onConflictDoNothing()
-//   }
-// }
 
 async function processBatch(entries: JMDictEntry[]) {
   // Prepare all data for batch insertion
@@ -221,22 +189,10 @@ async function cleanup() {
 
 async function clearTables() {
   try {
-    // First delete meanings because it has foreign key reference
-    // await db.delete(meanings)
-    // console.log('Cleared meanings table')
-
-    // // Then delete dictionary entries
-    // await db.delete(dictionaryEntries)
-    // console.log('Cleared dictionary entries table')
-
     // Alternative method using raw SQL if the above doesn't work
-    await db.execute(sql`TRUNCATE TABLE meanings CASCADE;`)
-    await db.execute(sql`TRUNCATE TABLE dictionary_entries CASCADE;`)
-
-    // Most aggressive method (use with caution)
-    // await db.execute(sql`
-    //   TRUNCATE TABLE meanings, dictionary_entries RESTART IDENTITY CASCADE;
-    // `)
+    // await db.execute(sql`TRUNCATE TABLE meanings CASCADE;`)
+    // await db.execute(sql`TRUNCATE TABLE dictionary_entries CASCADE;`)
+    await db.execute(sql`TRUNCATE TABLE examples CASCADE;`)
 
     console.log('Successfully cleared all tables')
   } catch (error) {
@@ -245,17 +201,48 @@ async function clearTables() {
   }
 }
 
+function logProgress(processed: number, total: number) {
+  const now = Date.now()
+  if (now - lastLogged >= PROGRESS_INTERVAL) {
+    const elapsedSeconds = (now - startTime) / 1000
+    const entriesPerSecond = processed / elapsedSeconds
+    const percentComplete = ((processed / total) * 100).toFixed(2)
+    const estimatedTotal = total / entriesPerSecond
+    const remainingSeconds = estimatedTotal - elapsedSeconds
+
+    console.log(
+      `Progress: ${percentComplete}% (${processed}/${total} entries)\n` +
+        `Speed: ${entriesPerSecond.toFixed(2)} entries/second\n` +
+        `Estimated time remaining: ${(remainingSeconds / 60).toFixed(2)} minutes`
+    )
+
+    lastLogged = now
+  }
+}
+
+// Also update your main function to clear tables first:
 async function main() {
+  startTime = Date.now()
   try {
-    // await downloadDictionary()
-    await processDictionary()
-    // await cleanup()
+    console.log('Starting dictionary import...')
+
+    // Clear tables first
+    // console.log('Clearing existing tables...')
     // await clearTables()
 
-    console.log('Dictionary import completed successfully')
+    console.log('Downloading dictionary...')
+    await downloadDictionary()
+
+    console.log('Processing dictionary...')
+    await processDictionary()
+
+    const totalTime = ((Date.now() - startTime) / 1000).toFixed(2)
+    console.log(`\nDictionary import completed successfully in ${totalTime} seconds`)
   } catch (error) {
     console.error('Error importing dictionary:', error)
     exit(1)
+  } finally {
+    // await cleanup()
   }
 }
 
